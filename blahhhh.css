@@ -1,0 +1,17 @@
+#dataTable{
+    text-align: center;
+margin: left;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+  .vertical-center {
+    text-align: center;
+    align:center;
+    margin:20px 0px; padding: 0px;
+    size: 200px; 
+    
+  }

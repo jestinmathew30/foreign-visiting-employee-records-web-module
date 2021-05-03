@@ -1,0 +1,59 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="manag_view1.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>foreign visited</title>
+    <div>
+   
+      
+   </style>
+   
+   
+    </head>
+<body >
+
+  <section>
+    <div class="box">
+        <div  class="form">
+		  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/SAIL_Logo.svg/458px-SAIL_Logo.svg.png" alt="HTML5 Icon" style="width:128px;height:128px;" align = "center">
+            <h2>FOREIGN VISITED EMPLOYEES</h2>
+                <form action="reports.jsp" method="post" id="cVisit">
+  <label>Select a year:
+  <select id="year" name="year"></select>
+  </label>
+  <br>
+  <label for="quarters">Choose a quarter:</label>
+  <select name="quarter">
+    <option value="Q4" id="Q4">Q4 (JAN-MAR)</option>
+    <option value="Q1" id="Q1">Q1 (APR-JUN)</option>
+    <option value="Q2" id="Q2">Q2 (JUL-SEPT)</option>
+    <option value="Q3" id="Q3">Q3 (OCT-DEC)</option>
+  </select>
+  <br>
+  <input type="submit">
+</form>
+     </div>
+    </div>
+
+</section>
+
+
+<script>
+var start = 2019;
+var end = new Date().getFullYear();
+var options = "";
+for(var year = start ; year <=end; year++){
+  options += "<option>"+ year +"</option>";
+}
+document.getElementById("year").innerHTML = options;
+</script>
+
+
+</body>
+</html>
+

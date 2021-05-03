@@ -1,0 +1,68 @@
+#head{
+   
+        text-align: center;
+        vertical-align:middle;
+    margin:10px 0px; padding: 0px;
+    height:145px;
+    width:800px;
+    border:1px solid black;
+}
+
+#rwdtable {
+    
+    text-align: center;
+        vertical-align:middle;
+    margin:15px 0px; padding: 0px;
+    min-width: 500;
+    min-height:300 ;
+    
+
+
+}
+
+
+
+#blah{
+    
+    text-align: center;
+    vertical-align:middle;
+margin:10px 0px; padding: 0px;
+}
+
+h2{
+    
+    margin-top:10px;
+    margin-left:10px;
+    background:white;
+}
+
+#subh{
+    
+    font-size:20px;
+     text-align: right;
+    
+}
+
+
+#footer{
+   margin-left: 490px; 
+    margin-top: -60px; 
+    
+    
+}
+
+
+pre{
+    font-family: "Times New Roman", Times, serif;
+    font-size: 20px;
+}
+
+
+#print{
+    text-align: center;
+    align:center;
+margin:20px 0px; padding: 0px;
+    size: 200px; 
+    margin-top: -120px; 
+
+}

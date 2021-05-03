@@ -1,0 +1,1084 @@
+------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ 
+
+
+
+
+
+
+
+SQUENCE:
+
+FOR EMPLOYEE:
+login_portal.html >>>>>>> test.jsp >>>>>>>  blah.jsp >>>>>>> store.jsp >>>>>> second_page.jsp .
+
+FOR MIS:
+manag_view.html >>>>>>>> reports.jsp .
+
+
+
+
+
+
+------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ 
+**************DATABASE***************
+
+
+**--table contents for table FOREIGN--**
+
+
+Name       Null?    Type         
+---------- -------- ------------ 
+PNO        NOT NULL NUMBER(6)    
+NAME                VARCHAR2(50) 
+DESIGN              VARCHAR2(20) 
+SECTION             VARCHAR2(50) 
+DEPARTMENT          VARCHAR2(50) 
+PASSWORD            VARCHAR2(10) 
+
+
+
+**--table contents for table COUNTVIS--**
+
+Name         Null? Type         
+------------ ----- ------------ 
+PNO                NUMBER(38)   
+COUNTVISITED       VARCHAR2(50) 
+FROMDATE           DATE         
+TODATE             DATE         
+SOURCE             VARCHAR2(50) 
+NAME               VARCHAR2(50) 
+DESIGN             VARCHAR2(50) 
+SECTION            VARCHAR2(50) 
+DEPARTMENT         VARCHAR2(50)
+
+
+
+
+
+**- to insert the values in the table--**
+
+insert into countvis(pno,countvisited,fromdate,todate,source,name,department,section,design) values (?,?,?,?,?,?,?,?,?)"
+
+
+**-to campare the quarter date with the journey date-**
+
+query1 = "SELECT * from countvis WHERE to_char(fromdate,'yyyy-mm-dd') >='"+ q4start+"'and to_char(todate,'yyyy-mm-dd') <='"+q4end+"'";
+
+
+
+------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ 
+
+
+
+
+
+
+1. login_portal.html
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Portal</title>
+    <link rel="stylesheet" href="login_portal1.css">
+	
+    
+</head>
+
+<body>
+    <section>
+        <div class="box">
+            <div  class="form">
+                <h2>Login</h2>
+                <form action="test.jsp" method="post"  id="contact_form">
+                    <div class="inputBx">
+                        <input type="text" placeholder="Username" name="pnoo" required>
+                    </div>
+                    <div class="inputBx">
+                        <input type="password" placeholder="Password" name="passs" required>
+                     </div>
+                     <div class="inputBx">
+                    <input type="submit" value="Login">
+
+                     </div>
+        </form>
+        </div>
+    </div>
+    </section>
+              
+        
+    </body>
+</html>
+
+
+
+
+
+
+------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ 
+
+
+
+
+
+
+2. test.jsp
+
+
+
+
+
+<%@ page import="java.sql.*" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="javax.servlet.*" %>
+
+<%@ page import="oracle.jdbc.driver.OracleDriver"%>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmartion Letter</title>
+</head>
+<body>
+<%
+
+try{
+	  Connection con;
+	  PreparedStatement pst;
+	  ResultSet rs;
+	  
+	  Class.forName("oracle.jdbc.driver.OracleDriver");
+	  con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","mickey");
+	  
+	  String pno=request.getParameter("pnoo"); 
+      String password=request.getParameter("passs");
+	  
+	  String query= "SELECT * from foreign where pno='"+pno+"'";
+	  Statement st=con.createStatement();
+	   rs = st.executeQuery(query);
+	   while(rs.next()){
+		  if(rs.getString(6).equals(password)){
+			  out.println("welcome bhai");
+		    session.setAttribute("pnoooo", pno);
+		    response.sendRedirect("blah.jsp");
+   
+  
+
+
+
+      } 
+        else{
+		   
+		     out.println("no");
+		   
+		   
+        }
+	 }
+
+
+}
+catch(Exception e){
+	out.println(e);
+}
+
+
+%>
+</body>
+</html>
+
+
+
+
+
+
+
+------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ 
+
+
+
+
+
+
+
+3. blah.jsp
+
+
+
+
+
+
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="javax.servlet.*" %>
+
+<%@ page import="oracle.jdbc.driver.OracleDriver"%>
+
+
+<!DOCTYPE html>
+<html lang="en">	
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/SAIL_Logo.svg/458px-SAIL_Logo.svg.png" alt="HTML5 Icon" style="width:128px;height:128px;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="blahhhh.css">
+</head>
+<body>
+    <%
+
+try{
+	  String namee;
+	  Connection con;
+	  PreparedStatement pst;
+	  ResultSet rs;
+	  Class.forName("oracle.jdbc.driver.OracleDriver");
+	  con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","mickey");
+	   
+	   
+	  String pno = session.getAttribute("pnoooo").toString(); 
+	 
+	
+	  String query= "SELECT * from foreign where pno='"+ pno +"'";
+	  
+	  Statement st=con.createStatement();
+	   rs = st.executeQuery(query);
+	   
+	   while(rs.next()){
+			
+	     
+
+%> 
+
+    <div class="container">
+
+    <form class="well form-horizontal" >    
+    <fieldset>
+   
+    <!-- Form Name -->
+    <legend>INFORMATION REGARDING PRIVATE FOREIGN VISIT</legend>
+     
+    <!-- P.No. input-->
+           
+    <div class="form-group">
+      <label class="col-md-4 control-label">P.no :</label>  
+        <div class="col-md-4 inputGroupContainer">
+        <div class="input-group">
+            <span class="input-group-addon"></span>
+          <div><%=rs.getString("pno") %> </div>      
+        </div>
+      </div>
+    </div>
+	
+	<!-- Name input-->
+    
+    <div class="form-group">
+      <label class="col-md-4 control-label">Name :</label>  
+      <div class="col-md-4 inputGroupContainer">
+      <div class="input-group">
+      <span class="input-group-addon"></span>
+         <div><%=rs.getString("name") %> </div> 
+<%String x=rs.getString("name");%>
+<%session.setAttribute("name", x); %>		 
+        </div>
+      </div>
+    </div>
+	
+    
+    <!-- Designation input-->
+           <div class="form-group">
+      <label class="col-md-4 control-label">Designation:</label>  
+        <div class="col-md-4 inputGroupContainer">
+        <div class="input-group">
+            <span class="input-group-addon"></span>
+      <div><%=rs.getString("design") %> </div>  
+<%String y=rs.getString("design"); %>
+<%session.setAttribute("design", y); %>	  
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label">Section:</label>  
+          <div class="col-md-4 inputGroupContainer">
+          <div class="input-group">
+              <span class="input-group-addon"></span>
+        <div><%=rs.getString("section") %> </div> 
+<%String z=rs.getString("section"); %>
+<%session.setAttribute("section", z); %>		
+          </div>
+        </div>
+      </div>
+    
+
+    <!-- Department input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label">Department:</label>  
+          <div class="col-md-4 inputGroupContainer">
+          <div class="input-group">
+              <span class="input-group-addon"></span>
+        <div><%=rs.getString("department") %> </div>   
+		<%String f=rs.getString("department"); %>
+		<% session.setAttribute("department", f); %>
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <br>
+      <br>
+      <div class="form-group">
+<a  href="C:\Users\SHUSHMITA NAYAK\Downloads/PDF.pdf"><p style="text-align:center"> User Guidelines </p>
+  </a>
+  </div>
+</form>  
+
+
+      <br>
+      <br>
+      <br>
+      
+     
+   
+	
+	<!--Test-->
+	<form action="store.jsp" onSubmit="return (checkSubmit());" method="post" id="cVisit">
+	<TABLE id="dataTable" class="center">
+	<TR>
+	<td> </td>
+	<td>Country Name</td>
+	<td>From Date</td>
+	<td>To Date</td>
+	<td>Source Income</td>
+	</TR>
+		<TR>
+		<TD><INPUT type="checkbox" name="chk"></TD>
+			<TD><input type="text" name="countryName1" id="c"></TD>
+			<TD><INPUT type="date" name="startDate1" id="f"></TD>
+			<TD><INPUT type="date" name="endDate1" id= "t"></TD>
+			<TD><input type="text" name="sIncome1" id="s"></TD>
+		</TR>
+	</TABLE><br>
+
+		<div class="vertical-center">
+	<INPUT type="button" value="Add Row" onclick="addRow('dataTable')" /><br>
+	<INPUT type="button" value="Delete Row" onclick="deleteRow('dataTable')"/><br><br><br><br><br>
+	<input type="checkbox"required >&nbsp;I agree terms & conditions <br>
+    <button class="btn btn-warning"  >Submit <span class="glyphicon glyphicon-send"></span></button>
+    	
+    </div>   
+</form>
+    <%
+      
+ }
+ 
+ 
+ 
+
+}
+
+catch(Exception e){
+	out.println(e);
+	
+}
+%>
+  
+    </div>
+    </div>
+	
+	<!-- /.container -->
+</body>
+<script>
+	var now = new Date();
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+var index =1;
+function addRow(tableID) {
+
+			var table = document.getElementById(tableID);
+			console.log("called");
+
+			var rowCount = table.rows.length;
+
+			
+			var row = table.insertRow(rowCount);
+
+			var colCount = table.rows[0].cells.length;
+			
+           	index++;
+			for(var i=0; i<=colCount; i++) {
+
+				var newcell	= row.insertCell(i);
+                
+				newcell.innerHTML = table.rows[1].cells[i].innerHTML;
+				//alert(newcell.childNodes);
+				var n = newcell.childNodes[0].name;
+				newcell.childNodes[0].name= n.substring(0,n.length-1)+ index;
+			
+				switch(newcell.childNodes[0].type) {
+					case "checkbox":
+							newcell.childNodes[0].checked = false;
+							break;
+					case "text":
+							newcell.childNodes[0].value = "";
+							break;
+					case "text":
+							newcell.childNodes[0].value = "";
+							break;
+					case "text":
+							newcell.childNodes[0].value = "";
+							break;
+					case "text":
+							newcell.childNodes[0].value = "";
+							break;
+				}
+			}
+		}
+		function deleteRow(tableID) {
+			try {
+			var table = document.getElementById(tableID);
+			var rowCount = table.rows.length;
+
+			for(var i=0; i<rowCount; i++) {
+				var row = table.rows[i];
+				var chkbox = row.cells[0].childNodes[0];
+				if(null != chkbox && true == chkbox.checked) {
+					if(rowCount <= 2) {
+						alert("Cannot delete all the rows.");
+						break;
+					}
+					table.deleteRow(i);
+					rowCount--;
+					i--;
+				}
+
+
+			}
+			}catch(e) {
+				alert(e);
+			}
+		}
+		
+		function quarter_of_the_year(date) 
+  {
+    
+	
+var quarter = Math.floor((date.getMonth() / 3));
+var firstDate = new Date(date.getFullYear(), quarter * 3, 1);
+var endDate = new Date(firstDate.getFullYear(), firstDate.getMonth() + 3, 0);
+return quarter;
+	
+  }
+  
+  
+  function end_quarter_date(date){
+	  var d = new Date(date);
+ var quarter = Math.floor(((d.getMonth())/	 3));
+  var firstDate = new Date(d.getFullYear(), quarter*3 , 1);
+  var endDate = new Date(firstDate.getFullYear(), firstDate.getMonth() + 3, 0);
+	return endDate;
+  }
+</script>
+
+
+
+
+<script>
+function checkSubmit()
+{
+	
+for(var i=1;i<=index;i++){
+	var newDate = quarter_of_the_year(new Date(document.getElementsByName("endDate"+i)[0].value));
+
+	if(document.getElementsByName("endDate"+i)[0].value> now || end_quarter_date(document.getElementsByName("endDate"+i)[0].value).addDays(10)<= now || document.getElementsByName("startDate"+i)[0].value > document.getElementsByName("endDate"+i)[0].value)
+	{	
+alert("Sorry!");
+
+return false;
+		
+	}
+	
+	
+}
+return true;
+
+}
+</script>
+
+
+</html>
+
+
+
+
+
+
+
+------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ 
+
+
+
+
+
+4. store.jsp
+
+
+
+
+
+<%@ page import="java.sql.*" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="javax.servlet.*" %>
+<%@ page import="oracle.jdbc.driver.OracleDriver"%>
+
+<%
+
+
+
+
+int inocountry=0;
+int i=1;
+
+	
+	 
+	 
+
+	
+	 
+
+int index=1;
+while( request.getParameter("countryName"+index)!= null){
+String country=request.getParameter("countryName"+index);
+String start=request.getParameter("startDate"+index);
+SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-mm-dd");
+
+
+String end1 =request.getParameter("endDate"+index);
+java.sql.Date startsql_date= java.sql.Date.valueOf(start);
+java.sql.Date endsql_date= java.sql.Date.valueOf(end1);
+String amount=request.getParameter("sIncome"+index);
+String pno = session.getAttribute("pnoooo").toString(); 
+String namee = session.getAttribute("name").toString(); 
+String designn = session.getAttribute("design").toString(); 
+String sectionn = session.getAttribute("section").toString(); 
+String department = session.getAttribute("department").toString(); 
+int pnoo = Integer.parseInt(pno);
+
+try{
+	 Class.forName("oracle.jdbc.driver.OracleDriver");
+	Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","mickey");
+	PreparedStatement ps = conn.prepareStatement("insert into countvis(pno,countvisited,fromdate,todate,source,name,department,section,design) values (?,?,?,?,?,?,?,?,?)");
+	ps.setInt(1,pnoo);
+	 ps.setString(2,country);
+	 ps.setDate(3,startsql_date);
+	 ps.setDate(4,endsql_date);
+	 ps.setString(5,amount);
+	  ps.setString(6,namee);
+	   ps.setString(7,department);
+	    ps.setString(8,sectionn);
+		 ps.setString(9,designn);
+	
+
+	
+	 int x=ps.executeUpdate();
+	if(x!=0){
+		
+	response.sendRedirect("second_page.jsp");
+	}
+	else{
+		out.println("no data");
+}
+
+}
+catch(Exception e){
+	out.println(e);
+}
+index++;
+}
+
+%>
+
+
+
+
+
+
+
+------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ 
+
+
+
+
+
+
+5. second_page.jsp
+
+
+
+
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="javax.servlet.*" %>
+
+<%@ page import="oracle.jdbc.driver.OracleDriver"%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+	<link rel="stylesheet" href="second_page.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmartion Letter</title>
+<body>
+  <form id="f">  
+  <div id="head" align="center">
+    <table align="center" style="width:100%" border="1"; >
+      <tr>
+        <th>????? ?????? ??????? 
+          <br>
+          <img src="logo.png" alt="" border=1 height=50 width=50>
+          <br>
+          Bhilai Steel Plant
+         </th>
+   <th><h2>INFORMATION REGARDING PRIVATE FOREIGN VISIT</h2></th>
+   <th><b>EF</b>
+  <br>
+  <b>Gen_01/01</b>
+</th>
+  
+  </tr>
+  </table>
+  
+    </div>
+    <div id="subh"> 
+      <p><em> Annexure to Circular No. Rules- 37/2015, dtd 23.07.2015</em></p>
+    </div>
+    <p>
+      To
+      <br>
+      <br>
+      The Personnel Executive (........................................)
+      <br>
+      Bhilai Steel Plant
+      <br>
+      <br>
+      <b> Sub:&nbsp; Information regarding private foreign visit.</b>
+      <br>
+      <em>Ref: &nbsp;Circular No. Rules-37/2015 dated:23.07.2015</em>
+      <br>
+      <br>
+      <br>
+      Respected Sir/Madam,
+      <br>
+      <br>
+      <p>
+      With reference to circular cited above I hereby submit details of private foreign visit performed by me.
+      </p>
+
+    </p>
+     
+	 
+	  <%
+	  try{
+		  
+	  
+	  Connection con;
+	  PreparedStatement pst;
+	  ResultSet rs1, rs2;
+	  
+	  Class.forName("oracle.jdbc.driver.OracleDriver");
+	  con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","mickey");
+	  String pno = session.getAttribute("pnoooo").toString(); 
+	  String query1 = "SELECT * from foreign where pno='"+pno+"'";
+	  String query2 = "SELECT * from countvis where pno='"+pno+"'";
+	  Statement st1=con.createStatement();
+	  Statement st2=con.createStatement(); 
+	  rs1 = st1.executeQuery(query1);
+	  rs2 = st2.executeQuery(query2);
+	 
+		  
+	  	   
+	  
+	    
+	
+	%>
+	 
+	 
+	 
+	 
+
+
+
+    <br>
+    
+    <table align="center" id="rwdtable" border="1";>
+        <colgroup span="3"></colgroup>
+        
+        <thead>
+          <th>No.</th>
+          <th>Country Visited</th>
+          <th>From Date</th>
+          <th>To Date</th>
+          <th>Fund Source</th>
+          <th>Remarks</th>
+          
+        </thead>
+        <%
+		   int count=1;
+		   while(rs2.next()){
+		    
+		%>
+		<tr>
+          <td data-th="No."><% out.println(count); %></td>
+          <td data-th="Country Visited"><%=rs2.getString("countvisited") %></td>
+          <td data-th="From Date"><%=rs2.getDate("fromdate") %></td>
+          <td data-th="To Date"><%=rs2.getDate("todate") %></td>
+          <td data-th="Fund Source"><%=rs2.getString("source") %></td>
+          <td data-th="Remarks"></td>
+        
+		</tr>
+		<%
+	        count+=1;
+		  }
+		  
+	    %>
+	 
+     </table>
+	 
+	 
+      <br>
+      <p><pre id="blah">Thanking you,                                                                                                       Yours faithfully,
+      <br>
+      <br>Dated:                                                                                                                            (Signature)
+      </p>
+	  
+	  <% 
+	     while(rs1.next()){
+	  %>
+	  
+      <div>
+        <pre id="footer">
+         Name: <%=rs1.getString("name") %>
+         Personal No: <%=rs1.getString("pno") %>
+         Designation: <%=rs1.getString("design") %>
+         Section: <%=rs1.getString("section") %>
+         Department: <%=rs1.getString("department") %>
+
+      </div>
+      
+	    <%
+	 
+	   }
+	 }
+	 catch(Exception e){
+	 out.println(e);}
+%> 
+      
+	  
+	  
+    </form>
+    <input id="print" type="button" value="Print" onclick="window.print()">
+</body>
+</html>
+
+
+
+
+
+
+
+------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ 
+
+
+
+
+
+
+6. manag_view.html
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="manag_view1.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>foreign visited</title>
+    <div>
+   
+      
+   </style>
+   
+   
+    </head>
+<body >
+
+  <section>
+    <div class="box">
+        <div  class="form">
+		  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/SAIL_Logo.svg/458px-SAIL_Logo.svg.png" alt="HTML5 Icon" style="width:128px;height:128px;" align = "center">
+            <h2>FOREIGN VISITED EMPLOYEES</h2>
+                <form action="reports.jsp" method="post" id="cVisit">
+  <label>Select a year:
+  <select id="year" name="year"></select>
+  </label>
+  <br>
+  <label for="quarters">Choose a quarter:</label>
+  <select name="quarter">
+    <option value="Q4" id="Q4">Q4 (JAN-MAR)</option>
+    <option value="Q1" id="Q1">Q1 (APR-JUN)</option>
+    <option value="Q2" id="Q2">Q2 (JUL-SEPT)</option>
+    <option value="Q3" id="Q3">Q3 (OCT-DEC)</option>
+  </select>
+  <br>
+  <input type="submit">
+</form>
+     </div>
+    </div>
+
+</section>
+
+
+<script>
+var start = 2019;
+var end = new Date().getFullYear();
+var options = "";
+for(var year = start ; year <=end; year++){
+  options += "<option>"+ year +"</option>";
+}
+document.getElementById("year").innerHTML = options;
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ 
+
+
+
+
+
+
+7. reports.jsp
+
+
+
+
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="javax.servlet.*" %>
+<%@ page import="oracle.jdbc.driver.OracleDriver"%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- CSS only -->
+	<style>
+		
+
+
+
+#heading{
+    text-align:center;
+margin-left:300px;
+height:100px;
+width:500px;
+border:3px solid black;
+}
+
+
+
+
+/* print styles */
+@media print {
+
+body {
+  margin: 0;
+  color: #000;
+  background-color: #fff;
+}
+
+}
+#t{
+	text-align:center;
+    margin-left:200px;
+    margin-right:70px;
+    border:2px solid black;
+}
+
+#p{
+    vertical-align:center;
+}
+	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title>
+    </head>
+	
+    <body>
+        
+		<div id="heading">
+  
+            
+            <b><h2>REPORTS OF FOREIGN VISITED EMPLOYEES</h2></b>
+            <br>
+			<br>
+		</div>
+<%
+
+try{
+	
+	  Connection con;
+	  PreparedStatement pst;
+	  ResultSet rs,rs1;
+	  String query1;
+	  
+	  Class.forName("oracle.jdbc.driver.OracleDriver");
+	  con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","mickey");
+	  
+	  String qtr =request.getParameter("quarter"); 
+	  String yr =request.getParameter("year");
+	  String q4start=yr;
+	  String q4end=yr;
+	  if(qtr.equals("Q4")){
+	    q4start += "-01-01";
+	    q4end += "-03-31";
+	  }
+	  else if (qtr.equals("Q1")){
+		  q4start += "-04-01";
+	    q4end += "-06-30";
+	  }
+	  else if (qtr.equals("Q2")){
+		  q4start += "-07-01";
+	    q4end += "-09-31";
+	  }	 
+	 else if (qtr.equals("Q3")){	
+		  q4start += "-10-01";
+	    q4end += "-12-31";
+	  }	 
+        
+		int i=0;
+		query1 = "SELECT * from countvis WHERE to_char(fromdate,'yyyy-mm-dd') >='"+ q4start+"'and to_char(todate,'yyyy-mm-dd') <='"+q4end+"'";
+	    Statement st=con.createStatement();
+		
+	   	rs = st.executeQuery(query1);	  
+	   
+	   
+	   
+
+    %>
+
+            <br>
+            <table align="center" class="table" id="t" border="2";>
+                <colgroup span="3"></colgroup>
+                
+                <thead>
+				   <th>Sno </th>
+                  <th>Pno </th>
+				  <th>Name </th>
+				  <th>Designation</th>
+				  <th>Section</th>
+				  <th>Department</th>
+				  
+				  <th>Country Visited</th>
+                  <th>From Date</th>
+                  <th>To Date</th>
+				  <th>Fund Source</th>
+                  
+                </thead>
+				<%
+				   
+				   while(rs.next()){
+i++;		  
+				
+				%>
+				
+				
+				
+                <tr>
+				<td data-th="Pno"><% out.println(i); %></td>
+                    <td data-th="Pno"><%=rs.getString("pno") %></td>
+					<td data-th="NAme"><%=rs.getString("name") %></td>
+						<td data-th="design"><%=rs.getString("design") %></td>
+					<td data-th="section"><%=rs.getString("section") %></td>
+				<td data-th="dept"><%=rs.getString("department") %></td>
+					<td data-th="Country Visited"><%=rs.getString("countvisited") %></td>
+                    <td data-th="From Date"><%=rs.getDate("fromdate") %></td>
+                    <td data-th="To Date"><%=rs.getDate("todate") %></td>
+                    <td data-th="Fund Source"><%=rs.getString("source") %></td>
+					
+					
+					
+					
+					
+                </tr>
+           
+
+	<%
+
+				   }
+
+				   }
+
+catch(Exception e){
+	out.println(e);
+    
+}
+
+
+%>
+</table>
+<br><br>
+<input id="p" type="button" value="Print" onclick="window.print()" align="center">
+
+</body>
+</html>
+
+
+
+
+
+
+------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ ------------ ----- ------------ 
+

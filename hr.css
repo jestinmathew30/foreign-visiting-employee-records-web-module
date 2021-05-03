@@ -1,0 +1,51 @@
+html{
+	text-align: center;
+	align:center;
+	margin:80px;
+}
+	
+      
+
+
+
+
+select{
+	text-align: center;
+	height:48px;
+	width:80px;
+	font-size:18px;
+}
+#header{
+	margin-left:470px;
+	margin-right:60px;
+	height:50px;
+	width:400px;
+border:4px solid black;
+}
+#year{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:18px;
+	text-align:center;
+	
+}
+#months{
+	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:18px;
+	margin-left:70px;
+	margin-right:60px;
+   
+	
+}
+
+#table{
+	
+		
+	  
+}
+#JM{
+	background-color:gray;
+}
+#JS{
+	background-color: gray;
+}
